@@ -1,10 +1,7 @@
-import { Main } from "../pages/Main";
+import { Showcase } from "../pages/Showcase";
 
 const App = () => {
-	return <>
-		<p>Text</p>
-		<Main />
-	</>;
+	return <Showcase />;
 };
 
 export default App;
