@@ -1,1 +1,3 @@
-# admiral-custom-components
+# Кастомный элемент Select Search на основе UI библиотеки Admiral.
+
+## Обязательные зависимости:
