@@ -2,13 +2,13 @@
 
 :root {
 	--color-dark: #0e0c15;
-	--color-light: #ffefc3;
+	--color-light: #ffffff;
 }
 
 body {
 	margin: 0;
 	padding: 0;
-	font-family: "IBM Plex Sans", sans-serif;
+	font-family: 'VTB Group UI', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-weight: 500;

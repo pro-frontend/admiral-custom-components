@@ -1,4 +1,4 @@
-import { Showcase } from "../pages/Showcase";
+import { Showcase } from "@/pages/Showcase";
 
 const App = () => {
 	return <Showcase />;
