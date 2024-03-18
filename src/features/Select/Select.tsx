@@ -1,12 +1,11 @@
-import type { FC, ReactElement } from "react";
-import { cloneElement } from "react";
+import type { ChangeEvent, FC, ReactElement } from "react";
+import { cloneElement, useRef, useState } from "react";
 import { Input } from "@/shared/ui/Input";
-import { useRef, useState } from "react";
 import { useOutsideClick } from "@/shared/lib/hooks/useOutsideClick";
 
 interface RenderSelectOptionsProps {
-	selectedValue: string;
-	onSelectedValueChange: (value: string) => void;
+	selectedValue?: string;
+	onSelectedValueChange?: (value: string) => void;
 }
 
 interface SelectProps {
@@ -32,9 +31,13 @@ export const Select: FC<SelectProps> = ({ renderSelectOptions }) => {
 		setIsSelectOptionsVisible(false);
 	};
 
+	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setSelectedValue(e.target.value);
+	};
+
 	return (
 		<div ref={containerRef}>
-			<Input onClick={onInputClick} value={selectedValue} />
+			<Input onClick={onInputClick} value={selectedValue} onChange={onInputChange} />
 			{isSelectOptionsVisible && cloneElement(renderSelectOptions, {
 				selectedValue,
 				onSelectedValueChange: handleSelectedValueChange,
