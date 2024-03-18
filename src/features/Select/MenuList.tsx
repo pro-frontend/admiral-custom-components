@@ -1,13 +1,15 @@
 import type { FC } from "react";
 import type React from "react";
 import { useMemo } from "react";
+import { List } from "@/shared/ui/List";
+import { ListItem } from "@/shared/ui/ListItem";
 
-interface InfiniteScrollListProps {
+interface MenuListProps {
 	selectedValue?: string,
 	onSelectedValueChange?: (value: string) => void
 }
 
-export const InfiniteScrollList: FC<InfiniteScrollListProps> = ({ onSelectedValueChange }) => {
+export const MenuList: FC<MenuListProps> = ({ onSelectedValueChange }) => {
 	const data = useMemo(() => {
 		let size = 10;
 		const array = Array(size).fill(null);
@@ -22,10 +24,10 @@ export const InfiniteScrollList: FC<InfiniteScrollListProps> = ({ onSelectedValu
 	};
 
 	return (
-		<ul onClick={handleClick}>
+		<List onClick={handleClick}>
 			{data.map(({ key, value }: { key: string, value: string }) => (
-				<li key={key} id={value}>{value}</li>
+				<ListItem key={key} id={value}>{value}</ListItem>
 			))}
-		</ul>
+		</List>
 	);
 };

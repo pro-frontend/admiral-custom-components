@@ -2,6 +2,8 @@ import type { ChangeEvent, FC, ReactElement } from "react";
 import { cloneElement, useRef, useState } from "react";
 import { Input } from "@/shared/ui/Input";
 import { useOutsideClick } from "@/shared/lib/hooks/useOutsideClick";
+import { SelectContainer } from "@/features/Select/SelectContainer";
+import { ChevronDown } from "@/features/Select/ChevronDown";
 
 interface RenderSelectOptionsProps {
 	selectedValue?: string;
@@ -17,8 +19,10 @@ export const Select: FC<SelectProps> = ({ renderSelectOptions }) => {
 	const [selectedValue, setSelectedValue] = useState("");
 
 	const containerRef = useRef<HTMLDivElement>(null);
+	const inputRef = useRef<HTMLDivElement>(null);
 
 	const onInputClick = () => {
+		inputRef?.current?.focus();
 		setIsSelectOptionsVisible(true);
 	};
 
@@ -36,12 +40,13 @@ export const Select: FC<SelectProps> = ({ renderSelectOptions }) => {
 	};
 
 	return (
-		<div ref={containerRef}>
-			<Input onClick={onInputClick} value={selectedValue} onChange={onInputChange} />
+		<SelectContainer ref={containerRef}>
+			<Input ref={inputRef} onClick={onInputClick} value={selectedValue} onChange={onInputChange} />
+			<ChevronDown $turnUp={isSelectOptionsVisible} $size={"24px"} onClick={onInputClick} />
 			{isSelectOptionsVisible && cloneElement(renderSelectOptions, {
 				selectedValue,
 				onSelectedValueChange: handleSelectedValueChange,
 			})}
-		</div>
+		</SelectContainer>
 	);
 };
