@@ -7,10 +7,7 @@ import "./index.css";
 import { ThemeProvider } from "styled-components";
 import { FontsVTBGroup, DropdownProvider, LIGHT_THEME } from "@admiral-ds/react-ui";
 import { dark } from "./shared/ui/theme";
-import {
-	QueryClient,
-	QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const container = document.getElementById("root");
 
