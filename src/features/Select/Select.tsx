@@ -19,7 +19,7 @@ export const Select: FC<SelectProps> = ({ renderSelectOptions }) => {
 	const [selectedValue, setSelectedValue] = useState("");
 
 	const containerRef = useRef<HTMLDivElement>(null);
-	const inputRef = useRef<HTMLDivElement>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const onInputClick = () => {
 		inputRef?.current?.focus();
