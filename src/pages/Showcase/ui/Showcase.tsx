@@ -7,7 +7,7 @@ export const Showcase = () => {
 	return (
 		<Container>
 			<p>Main page!</p>
-			<Select renderSelectOptions={<MenuList />} />
+			{/*<Select renderSelectOptions={<MenuList />} />*/}
 			<p>Examples:</p>
 			<LoadOnScrollTemplate />
 		</Container>
