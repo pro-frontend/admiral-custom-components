@@ -2,6 +2,7 @@ import { LoadOnScrollTemplate } from "@/features/LoadOnScrollTemplate";
 import { Container, ListItem } from "@/shared/ui";
 import { InfiniteScroll } from "@/features/InfiniteScroll";
 import { useEffect, useMemo, useState } from "react";
+import { AntdSelectSandbox } from "@/features/AntdSelect";
 
 export const Showcase = () => {
 	const [dataLength, setDataLength] = useState(8);
@@ -24,6 +25,8 @@ export const Showcase = () => {
 		<Container>
 			<p>Main page!</p>
 			<InfiniteScroll data={data} RenderComponent={ListItem} onLastElement={onLastElement} />
+			<p>Antd:</p>
+			<AntdSelectSandbox />
 			<p>Examples:</p>
 			<LoadOnScrollTemplate />
 		</Container>
