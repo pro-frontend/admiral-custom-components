@@ -10,13 +10,13 @@ export const AntdSelectSandbox = () => {
 	const dataForSelectWithSearchField = useMemo(() => {
 		return Array(dataForSelectWithSearchFieldLength)
 			.fill(null)
-			.map((el, i) => ({ value: (i + 1).toString(), label: <p>{(i + 1).toString()}</p> }));
+			.map((el, i) => ({ value: (i + 1).toString(), label: (<p>{(i + 1).toString()}</p> as unknown as string) }));
 	}, [dataForSelectWithSearchFieldLength]);
 
 	const dataForSelectModeTags = useMemo(() => {
 		return Array(dataForSelectModeTagsLength)
 			.fill(null)
-			.map((el, i) => ({ value: (i + 1).toString(), label: <p>{(i + 1).toString()}</p> }));
+			.map((el, i) => ({ value: (i + 1).toString(), label: (<p>{(i + 1).toString()}</p> as unknown as string) }));
 	}, [dataForSelectModeTagsLength]);
 
 	const onLastElementSelectWithSearchField = () => {

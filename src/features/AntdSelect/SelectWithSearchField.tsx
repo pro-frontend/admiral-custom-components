@@ -39,7 +39,8 @@ export const SelectWithSearchField: FC<{
 					...data,
 					{
 						value: "",
-						label: <InView as="div" onChange={onLastElementInView}>"default"</InView>,
+						label: (
+							<InView as="div" onChange={onLastElementInView}>"default"</InView> as unknown as string),
 					},
 				]}
 			/>
