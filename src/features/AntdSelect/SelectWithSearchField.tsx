@@ -1,7 +1,7 @@
+import type { FC } from "react";
+import { useCallback } from "react";
 import { Select } from "antd";
-import { FC, useCallback, useMemo, useState } from "react";
 import { InView } from "react-intersection-observer";
-import { renderToString } from "react-dom/server";
 
 const onChange = (value: string) => {
 	console.log(`selected ${value}`);

@@ -1,17 +1,7 @@
-import { Select } from "antd";
-import type { SelectProps } from "antd";
-import { InView } from "react-intersection-observer";
 import type { FC } from "react";
 import { useCallback } from "react";
-
-const options: SelectProps["options"] = [];
-
-for (let i = 10; i < 36; i++) {
-	options.push({
-		value: i.toString(36) + i,
-		label: i.toString(36) + i,
-	});
-}
+import { Select } from "antd";
+import { InView } from "react-intersection-observer";
 
 export const SelectModeTags: FC<{
 	onLastElement?: () => void;
@@ -33,9 +23,11 @@ export const SelectModeTags: FC<{
 		onChange={handleChange}
 		style={{ width: "100%" }}
 		options={[
-			...data, {
+			...data,
+			{
 				value: "",
-				label: <InView as="div" onChange={onLastElementInView} />,
+				label: (
+					<InView as="div" onChange={onLastElementInView}>"default"</InView> as unknown as string),
 			},
 		]}
 	/>;

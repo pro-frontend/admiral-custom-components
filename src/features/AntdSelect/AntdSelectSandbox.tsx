@@ -1,7 +1,6 @@
 import { SelectWithSearchField } from "@/features/AntdSelect/SelectWithSearchField";
 import { SelectModeTags } from "@/features/AntdSelect/SelectModeTags";
-import { useCallback, useMemo, useState } from "react";
-import { InView } from "react-intersection-observer";
+import { useMemo, useState } from "react";
 
 export const AntdSelectSandbox = () => {
 	const [dataForSelectWithSearchFieldLength, setDataForSelectWithSearchFieldLength] = useState(8);
