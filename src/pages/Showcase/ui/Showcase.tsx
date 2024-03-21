@@ -23,8 +23,8 @@ export const Showcase = () => {
 
 	return (
 		<Container>
-			<p>Main page!</p>
-			<InfiniteScroll data={data} RenderComponent={ListItem} onLastElement={onLastElement} />
+			{/*<p>Main page!</p>*/}
+			{/*<InfiniteScroll data={data} RenderComponent={ListItem} onLastElement={onLastElement} />*/}
 			<p>Antd:</p>
 			<AntdSelectSandbox />
 			<p>Examples:</p>

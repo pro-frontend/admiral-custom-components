@@ -3,26 +3,30 @@ import { useCallback } from "react";
 import { Select } from "antd";
 import { InView } from "react-intersection-observer";
 
-const onChange = (value: string) => {
-	console.log(`selected ${value}`);
-};
-
-const onSearch = (value: string) => {
-	console.log("search:", value);
-};
-
-// Filter `option.label` match the user type `input`
-const filterOption = (input: string, option?: { label: string; value: string }) =>
-	(option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
 export const SelectWithSearchField: FC<{
 	onLastElement?: () => void;
 	data: Array<{ value: string; label: string; }>
-}> = ({ data, onLastElement }) => {
+}> = ({ data = [], onLastElement }) => {
+	const filterOption = (input: string, option?: { label: string; value: string }) =>
+		(option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
+	const filterSort = (optionA?: { value: string; label: string; }, optionB?: { value: string; label: string; }) =>
+		(optionA?.label ?? "").toLowerCase().localeCompare((optionB?.label ?? "").toLowerCase());
+
+	const onChange = (value: string) => {
+		console.log(`selected ${value}`);
+	};
+
+	const onSearch = (value: string) => {
+		console.log("search:", value);
+	};
 
 	const onLastElementInView = useCallback(() => {
 		onLastElement && onLastElement();
 	}, [onLastElement]);
+
+	console.log(data);
 
 	return (
 		<>
@@ -30,11 +34,13 @@ export const SelectWithSearchField: FC<{
 			<Select
 				size="large"
 				showSearch
-				placeholder="Select a person"
+				placeholder="Search to Select"
 				optionFilterProp="children"
-				onChange={onChange}
-				onSearch={onSearch}
-				filterOption={filterOption}
+				// filterOption={filterOption}
+				// filterSort={filterSort}
+				// onChange={onChange}
+				// onSearch={onSearch}
+				style={{ width: "100%" }}
 				options={[
 					...data,
 					{
