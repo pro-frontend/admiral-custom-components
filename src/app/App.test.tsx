@@ -5,5 +5,5 @@ test("App should have correct initial render", () => {
 	render(<App />);
 
 	// The app should be rendered correctly
-	expect(screen.getByText("Text")).toBeInTheDocument();
+	expect(screen.getByText("Main page!")).toBeInTheDocument();
 });
