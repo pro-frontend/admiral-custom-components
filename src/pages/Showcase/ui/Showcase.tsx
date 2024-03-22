@@ -1,6 +1,7 @@
+import { useEffect, useMemo, useState } from "react";
+import type { ChangeEvent } from "react";
 import { Container, ListItem } from "@/shared/ui";
 import { InfiniteScroll } from "@/features/InfiniteScroll";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Modal } from "@/features/Modal";
 import { Option, SelectField } from "@admiral-ds/react-ui";
 import styled from "styled-components";
@@ -46,16 +47,82 @@ export const Showcase = () => {
 				<InfiniteScroll data={data} RenderComponent={ListItem} onLastElement={onLastElement} />
 			</div>
 			<Modal title="Список полей">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cupiditate ducimus nisi nulla numquam
-				obcaecati
-				quam quasi quod ut veritatis?
-				<Separator />
 				<SelectField
-					label="label"
+					label="Тип таска"
 					className="Search"
 					value={selected}
 					onChange={handleSelectChange}
-					placeholder="Placeholder"
+					placeholder="Тип таска"
+				>
+					{
+						OPTIONS_SIMPLE.map((option, ind) => (
+							<Option key={option} value={option} disabled={ind === 4}>
+								{option}
+							</Option>
+						))
+					}
+				</SelectField>
+				<Separator />
+				Филиал
+				<Separator />
+				<SelectField
+					label="ID документа"
+					className="Search"
+					value={selected}
+					onChange={handleSelectChange}
+					placeholder="ID документа"
+				>
+					{
+						OPTIONS_SIMPLE.map((option, ind) => (
+							<Option key={option} value={option} disabled={ind === 4}>
+								{option}
+							</Option>
+						))
+					}
+				</SelectField>
+				<Separator />
+				Участник отправитель
+				<Separator />
+				Участник получатель
+				<Separator />
+				<SelectField
+					label="Сумма"
+					className="Search"
+					value={selected}
+					onChange={handleSelectChange}
+					placeholder="Сумма"
+				>
+					{
+						OPTIONS_SIMPLE.map((option, ind) => (
+							<Option key={option} value={option} disabled={ind === 4}>
+								{option}
+							</Option>
+						))
+					}
+				</SelectField>
+				<Separator />
+				<SelectField
+					label="Дата/время"
+					className="Search"
+					value={selected}
+					onChange={handleSelectChange}
+					placeholder="Дата/время"
+				>
+					{
+						OPTIONS_SIMPLE.map((option, ind) => (
+							<Option key={option} value={option} disabled={ind === 4}>
+								{option}
+							</Option>
+						))
+					}
+				</SelectField>
+				<Separator />
+				<SelectField
+					label="Сообщение"
+					className="Search"
+					value={selected}
+					onChange={handleSelectChange}
+					placeholder="Сообщение"
 				>
 					{
 						OPTIONS_SIMPLE.map((option, ind) => (
