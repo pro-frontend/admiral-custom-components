@@ -4,10 +4,11 @@ import { Modal as BaseModal, ModalTitle, ModalContent, Button } from "@admiral-d
 
 interface ModalProps {
 	title: string;
+	buttonTitle: ReactNode;
 	children: ReactNode;
 }
 
-export const Modal: FC<ModalProps> = ({ title, children }) => {
+export const Modal: FC<ModalProps> = ({ title, buttonTitle, children }) => {
 	const [opened, setOpened] = useState(false);
 	const modalRef = useRef<HTMLDivElement>(null);
 
@@ -15,7 +16,7 @@ export const Modal: FC<ModalProps> = ({ title, children }) => {
 
 	return (
 		<>
-			<Button onClick={handleButtonClick} />
+			<Button onClick={handleButtonClick}>{buttonTitle}</Button>
 			{opened && (
 				<BaseModal
 					closeOnEscapeKeyDown

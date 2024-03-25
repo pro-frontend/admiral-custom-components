@@ -19,7 +19,7 @@ export const OldModal = () => {
 		setSelected(e.target.value);
 	};
 
-	return <Modal title="Фильтры модуля">
+	return <Modal title="Фильтры модуля" buttonTitle="+">
 		<SelectField
 			label="Тип таска"
 			className="Search"
