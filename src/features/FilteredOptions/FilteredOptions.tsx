@@ -1,7 +1,7 @@
 import { Chips } from "@admiral-ds/react-ui";
 import type { ChipsProps } from "@admiral-ds/react-ui";
-import { FC, useEffect } from "react";
-import { useMemo, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export type ListDataType = {
 	id: string,

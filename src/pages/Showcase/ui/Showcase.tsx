@@ -17,8 +17,6 @@ export const Showcase = () => {
 			<FiltersContainer>
 				<FilterAccountTransactions />
 			</FiltersContainer>
-			<p>Admiral UI Examples:</p>
-			<Separator />
 		</Container>
 	);
 };
