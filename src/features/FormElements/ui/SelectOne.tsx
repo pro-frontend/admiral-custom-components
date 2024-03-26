@@ -17,7 +17,6 @@ const LastOption = ({ containerRef, onVisible, ...props }: LastOptionProps) => {
 	const [visible, setVisible] = useState<boolean>(false);
 	const ref = useRef<HTMLDivElement>(null);
 
-
 	useEffect(() => {
 		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
 			if (entries[0].isIntersecting && !visible) {

@@ -7,6 +7,7 @@ import { useEffect, useId, useState } from "react";
 interface SelectOneAsyncProps extends SelectProps {
 	label: ReactNode;
 	request: any;
+	onVisible?: () => void;
 }
 
 export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...props }) => {
@@ -52,6 +53,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				onInputChange={onInputChange}
 				mode="searchSelect"
 				id={id}
+				virtualScroll={{ itemHeight: "auto" }}
 			>
 				{options.map((option) => (
 					<Option key={option.value} value={option.value}>
