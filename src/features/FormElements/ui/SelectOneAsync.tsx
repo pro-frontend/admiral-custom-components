@@ -3,7 +3,8 @@ import { Label, Option, Select, useDebounce } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
 import { LastOption } from "@/features/FormElements/ui/LastOption";
 import type { ChangeEvent, FC, ReactNode } from "react";
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { v4 as uuid } from "uuid";
 
 interface SelectOneAsyncProps extends SelectProps {
 	label: ReactNode;
@@ -56,20 +57,20 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		};
 
 		const array = options.map(({ value, text }) => (
-			<Option value={value} key={`${text}/${value}`}>
+			<Option value={value} key={uuid()}>
 				{value}
 			</Option>
 		));
 
 		array.push(
 			<Option
-				key={`last/`}
+				key={uuid()}
 				value={""}
 				renderOption={options =>
 					<LastOption
 						{...options}
 						onVisible={onLastElementVisible}
-						key={`last`}
+						key={uuid()}
 					/>}
 			/>,
 		);

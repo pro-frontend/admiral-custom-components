@@ -1,7 +1,12 @@
 import { Container } from "@/shared/ui";
-import { ButtonCenterContainer } from "@/shared/ui/Container/ButtonCenterContainer";
 import { Separator } from "@/shared/ui/Separator";
 import { FilterAccountTransactions } from "@/widgets/FilterAccountTransactions/FilterAccountTransactions";
+import styled from "styled-components";
+
+const FiltersContainer = styled.section`
+	height: 32px;
+	display: flex;
+`;
 
 export const Showcase = () => {
 
@@ -9,11 +14,9 @@ export const Showcase = () => {
 		<Container>
 			<p>Main page!</p>
 			<Separator />
-			<FilterAccountTransactions />
-			<Separator />
-			<ButtonCenterContainer>
+			<FiltersContainer>
 				<FilterAccountTransactions />
-			</ButtonCenterContainer>
+			</FiltersContainer>
 			<p>Admiral UI Examples:</p>
 			<Separator />
 		</Container>
