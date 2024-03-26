@@ -28,11 +28,11 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		if (data) {
 			const names = data["results"] as Array<{ name: string }>;
 			const options = names.map(({ name }) => ({ value: name, text: name }));
-			// if (currentPage === 1) {
-			setOptions(options);
-			// } else {
-			// 	setOptions((prevState) => [...prevState, ...options]);
-			// }
+			if (currentPage === 1) {
+				setOptions(options);
+			} else {
+				setOptions((prevState) => [...prevState, ...options]);
+			}
 		}
 	}, [data]);
 
@@ -51,7 +51,10 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		console.log(`typeof currentPage: ${typeof currentPage}`);
 		if (currentPage < totalPages) {
 			console.log(`currentPage < totalPages: ${currentPage < totalPages}`);
-			setCurrentPage(currentPage + 1);
+			setCurrentPage(prevState => {
+				console.log(prevState, currentPage);
+				return prevState + 1;
+			});
 		}
 	};
 
@@ -76,7 +79,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		);
 
 		return array;
-	}, [options]);
+	}, [onLastElementVisible, options]);
 
 	console.log(renderOptions.length);
 
