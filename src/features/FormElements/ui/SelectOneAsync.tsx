@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Label, Option, Select, useDebounce } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
-import type { ChangeEvent, FC, ReactNode } from "react";
+import { ChangeEvent, FC, ReactNode, useMemo } from "react";
 import { useEffect, useId, useState } from "react";
+import { LastOption } from "@/features/FormElements/ui/LastOption";
 
 interface SelectOneAsyncProps extends SelectProps {
 	label: ReactNode;
@@ -42,6 +43,33 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 
 	const id = useId();
 
+
+	const [count, setCount] = useState<number>(8);
+	const renderOptions = useMemo(() => {
+		const array = Array.from({ length: count }, (v, k) => {
+			return `${k}0000`;
+		}).map((item, index) => (
+			<Option value={item} key={`${index}/${count}`}>
+				{item}
+			</Option>
+		));
+		array.push(
+			<Option
+				key={`last/${count}`}
+				value={""}
+				renderOption={options =>
+					<LastOption
+						{...options}
+						onVisible={() => setCount(count + 5)}
+						key={`last`}
+					/>}
+			/>,
+		);
+
+		return array;
+	}, [count]);
+
+
 	return (
 		<>
 			<Label htmlFor={id}>{label}</Label>
@@ -55,11 +83,16 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				id={id}
 				virtualScroll={{ itemHeight: "auto" }}
 			>
-				{options.map((option) => (
-					<Option key={option.value} value={option.value}>
-						{option.text}
-					</Option>
-				))}
+				{/*{options.map((option) => (*/}
+				{/*	<Option key={option.value} value={option.value}>*/}
+				{/*		{option.text}*/}
+				{/*	</Option>*/}
+				{/*))}*/}
+
+
+				{renderOptions}
+
+
 			</Select>
 		</>
 	);
