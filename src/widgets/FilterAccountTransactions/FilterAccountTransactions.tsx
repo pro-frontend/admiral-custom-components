@@ -19,7 +19,13 @@ export const FilterAccountTransactions = () => {
 		setFilialValue(e.target.value);
 	};
 
-	return <Modal title="Фильтры модуля расчетных операций" buttonTitle="+">
+	return <Modal
+		title="Фильтры модуля расчетных операций"
+		buttonTitle="+"
+		onOk={() => {
+		}}
+		okButtonTitle="Далее"
+	>
 		<Separator />
 		<SelectOneAsync
 			label="Тип таска:"

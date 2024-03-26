@@ -1,18 +1,46 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
-import { Modal as BaseModal, ModalTitle, ModalContent, Button } from "@admiral-ds/react-ui";
+import {
+	Modal as BaseModal,
+	ModalTitle,
+	ModalContent,
+	Button,
+	ModalButtonPanel,
+} from "@admiral-ds/react-ui";
 
 interface ModalProps {
 	title: string;
 	buttonTitle: ReactNode;
 	children: ReactNode;
+	onOk?: () => void;
+	okButtonTitle?: string;
+	onCancel?: () => void;
+	cancelButtonTitle?: string;
 }
 
-export const Modal: FC<ModalProps> = ({ title, buttonTitle, children }) => {
+export const Modal: FC<ModalProps> = ({
+	title,
+	buttonTitle,
+	children,
+	onOk,
+	okButtonTitle,
+	onCancel,
+	cancelButtonTitle,
+}) => {
 	const [opened, setOpened] = useState(false);
 	const modalRef = useRef<HTMLDivElement>(null);
 
 	const handleButtonClick = () => setOpened(true);
+
+	const onOkClick = useCallback(() => {
+		onOk && onOk();
+		setOpened(false);
+	}, [onOk]);
+
+	const onCancelClick = useCallback(() => {
+		onCancel && onCancel();
+		setOpened(false);
+	}, [onCancel]);
 
 	return (
 		<>
@@ -31,6 +59,20 @@ export const Modal: FC<ModalProps> = ({ title, buttonTitle, children }) => {
 					<ModalContent>
 						{children}
 					</ModalContent>
+					<ModalButtonPanel>
+						{
+							okButtonTitle &&
+							<Button appearance="primary" dimension="m" onClick={onOkClick}>
+								{okButtonTitle}
+							</Button>
+						}
+						{
+							cancelButtonTitle &&
+							<Button appearance="secondary" dimension="m" onClick={onCancelClick}>
+								{cancelButtonTitle}
+							</Button>
+						}
+					</ModalButtonPanel>
 				</BaseModal>
 			)}
 		</>
