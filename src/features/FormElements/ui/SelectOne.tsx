@@ -53,7 +53,6 @@ interface SelectOneProps extends SelectProps {
 export const SelectOne: FC<SelectOneProps> = ({
 	placeholder = "Placeholder",
 	label,
-	render,
 	...props
 }) => {
 	const [count, setCount] = useState<number>(8);
@@ -81,12 +80,12 @@ export const SelectOne: FC<SelectOneProps> = ({
 		return array;
 	}, [count]);
 
-	const rangeId = useId();
+	const id = useId();
 
 	return (
 		<>
-			<Label htmlFor={rangeId}>{label}</Label>
-			<Select {...props} id={rangeId} placeholder={placeholder} mode="searchSelect">
+			<Label htmlFor={id}>{label}</Label>
+			<Select {...props} id={id} placeholder={placeholder} mode="searchSelect">
 				{renderOptions}
 			</Select>
 		</>
