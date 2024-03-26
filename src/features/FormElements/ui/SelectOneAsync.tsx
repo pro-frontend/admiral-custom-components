@@ -45,20 +45,16 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		setFilter(e.target.value);
 	};
 
-	const onLastElementVisible = () => {
-		const totalPages = data["total_pages"];
-		console.log(`typeof totalPages: ${typeof totalPages}`);
-		console.log(`typeof currentPage: ${typeof currentPage}`);
-		if (currentPage < totalPages) {
-			console.log(`currentPage < totalPages: ${currentPage < totalPages}`);
-			setCurrentPage(prevState => {
-				console.log(prevState, currentPage);
-				return prevState + 1;
-			});
-		}
-	};
-
 	const renderOptions = useMemo(() => {
+		const onLastElementVisible = () => {
+			const totalPages = data["total_pages"];
+			if (currentPage < totalPages) {
+				setCurrentPage(prevState => {
+					return prevState + 1;
+				});
+			}
+		};
+
 		const array = options.map(({ value, text }) => (
 			<Option value={value} key={`${text}/${value}`}>
 				{value}
@@ -79,7 +75,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		);
 
 		return array;
-	}, [onLastElementVisible, options]);
+	}, [options]);
 
 	console.log(renderOptions.length);
 
