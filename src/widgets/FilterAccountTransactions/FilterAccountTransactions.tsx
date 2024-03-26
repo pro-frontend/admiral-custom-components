@@ -24,12 +24,14 @@ export const FilterAccountTransactions = () => {
 	]);
 
 	useEffect(() => {
-		setTaskType("");
-		setFilial("");
-		setDocumentID("");
-		setInitiator("");
-		setReceiver("");
-		setMessage("");
+		if (clearFilters) {
+			setTaskType("");
+			setFilial("");
+			setDocumentID("");
+			setInitiator("");
+			setReceiver("");
+			setMessage("");
+		}
 
 		setClearFilters(false);
 	}, [clearFilters]);
@@ -45,12 +47,12 @@ export const FilterAccountTransactions = () => {
 	const onModalOk = () => {
 		const chipsData: ListDataType[] = [];
 
-		taskType && chipsData.push({ id: uuid(), label: `Тип таска: ${taskType}` });
-		filial && chipsData.push({ id: uuid(), label: `Филиал: ${filial}` });
-		documentID && chipsData.push({ id: uuid(), label: `ID документа: ${documentID}` });
-		initiator && chipsData.push({ id: uuid(), label: `Участник отправитель: ${initiator}` });
-		receiver && chipsData.push({ id: uuid(), label: `Участник получатель: ${receiver}` });
-		message && chipsData.push({ id: uuid(), label: `Сообщение: ${message}` });
+		if (taskType) chipsData.push({ id: uuid(), label: `Тип таска: ${taskType}` });
+		if (filial) chipsData.push({ id: uuid(), label: `Филиал: ${filial}` });
+		if (documentID) chipsData.push({ id: uuid(), label: `ID документа: ${documentID}` });
+		if (initiator) chipsData.push({ id: uuid(), label: `Участник отправитель: ${initiator}` });
+		if (receiver) chipsData.push({ id: uuid(), label: `Участник получатель: ${receiver}` });
+		if (message) chipsData.push({ id: uuid(), label: `Сообщение: ${message}` });
 
 		setRangeCountValue([0, 20]);
 
