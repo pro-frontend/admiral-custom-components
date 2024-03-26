@@ -1,5 +1,5 @@
 import { Option, SelectField } from "@admiral-ds/react-ui";
-import { Modal } from "@/features/Modal/Modal";
+import { Modal } from "@/features/Modal/ui/Modal";
 import { type ChangeEvent, useState } from "react";
 import { Separator } from "@/shared/ui/Separator";
 
