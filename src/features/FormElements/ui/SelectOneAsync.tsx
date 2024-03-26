@@ -51,6 +51,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				onChange={onChange}
 				onInputChange={onInputChange}
 				mode="searchSelect"
+				id={id}
 			>
 				{options.map((option) => (
 					<Option key={option.value} value={option.value}>

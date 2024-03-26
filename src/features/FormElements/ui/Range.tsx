@@ -2,7 +2,7 @@ import { Label, Range as BaseRange } from "@admiral-ds/react-ui";
 import type { RangeProps as BaseRangeProps } from "@admiral-ds/react-ui";
 import styled from "styled-components";
 import type { FC, ReactNode } from "react";
-import { useId, useState } from "react";
+import { memo, useCallback, useId, useMemo, useState } from "react";
 
 const RangeValues = styled.div`
 	display: flex;
@@ -18,7 +18,7 @@ interface RangeProps extends BaseRangeProps {
 	label: ReactNode;
 }
 
-export const Range: FC<RangeProps> = ({
+export const Range: FC<RangeProps> = memo(({
 	showValues = false,
 	onRangeValueChange,
 	minValue = 0,
@@ -28,18 +28,23 @@ export const Range: FC<RangeProps> = ({
 }) => {
 	const [rangeValue, setRangeValue] = useState<[number, number]>([minValue, maxValue]);
 	const rangeId = useId();
+	const rangeValuesRender = useMemo(() => {
+		return <RangeValues><span>{rangeValue[0]}</span> <span>{rangeValue[1]}</span></RangeValues>;
+	}, [rangeValue]);
+
+	const onRangeChange = useCallback((e: any, value: [number, number]) => {
+		setRangeValue(value);
+		onRangeValueChange && onRangeValueChange(value);
+	}, [onRangeValueChange]);
 
 	return <>
 		<Label htmlFor={rangeId}>{label}</Label>
-		{showValues && <RangeValues><span>{rangeValue[0]}</span> <span>{rangeValue[1]}</span></RangeValues>}
+		{showValues && rangeValuesRender}
 		<BaseRange
 			{...props}
 			id={rangeId}
 			value={rangeValue}
-			onChange={(e, value: [number, number]) => {
-				setRangeValue(value);
-				onRangeValueChange && onRangeValueChange(value);
-			}}
+			onChange={onRangeChange}
 		/>
 	</>;
-};
+});
