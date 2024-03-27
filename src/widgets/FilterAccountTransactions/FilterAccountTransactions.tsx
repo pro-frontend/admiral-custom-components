@@ -68,8 +68,13 @@ export const FilterAccountTransactions = () => {
 				onOk={onModalOk}
 				okButtonTitle="Далее"
 			>
-				<SelectOneAsyncExperiment label="SelectOneAsyncExperiment:" request={() => {
-				}} />
+				<SelectOneAsyncExperiment
+					label="SelectOneAsyncExperiment:"
+					request={searchPeopleByName}
+					value={taskType}
+					onChange={handleTaskTypeChange}
+					placeholder="Тип таска"
+				/>
 				<Separator $mode={SeparatorMode.L} />
 				<SelectOneAsync
 					label="Тип таска:"
