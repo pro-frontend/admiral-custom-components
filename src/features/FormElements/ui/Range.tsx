@@ -10,11 +10,13 @@ const RangeValues = styled.div`
 	justify-content: space-between;
 `;
 
+export type RangeNumber = [number, number];
+
 interface RangeProps extends BaseRangeProps {
 	/** Show selected range values from UI */
 	showValues?: boolean;
 	/** set lifted state up */
-	onRangeValueChange?: (rangeValue: [number, number]) => void;
+	onRangeValueChange?: (rangeValue: RangeNumber) => void;
 	/** label for range */
 	label: ReactNode;
 }
@@ -27,13 +29,13 @@ export const Range: FC<RangeProps> = memo(({
 	label,
 	...props
 }) => {
-	const [rangeValue, setRangeValue] = useState<[number, number]>([minValue, maxValue]);
+	const [rangeValue, setRangeValue] = useState<RangeNumber>([minValue, maxValue]);
 	const rangeId = useId();
 	const rangeValuesRender = useMemo(() => {
 		return <RangeValues><span>{rangeValue[0]}</span> <span>{rangeValue[1]}</span></RangeValues>;
 	}, [rangeValue]);
 
-	const onRangeChange = useCallback((e: any, value: [number, number]) => {
+	const onRangeChange = useCallback((e: any, value: RangeNumber) => {
 		setRangeValue(value);
 		onRangeValueChange && onRangeValueChange(value);
 	}, [onRangeValueChange]);

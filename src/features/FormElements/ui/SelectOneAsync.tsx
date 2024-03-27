@@ -29,21 +29,23 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 	const debouncedFilter = useDebouncedValue(filter, 500);
 
 	useEffect(() => {
-		const params = `search=${debouncedFilter}&page=${currentPage}&limit=10`;
+		if (currentPage !== totalPages) {
+			const params = `search=${debouncedFilter}&page=${currentPage}&limit=10`;
 
-		fetchData<SearchPeopleResponse>("https://swapi.tech/api/people", params, setIsLoading, noopFn)
-			.then(data => {
-				if (data) {
-					const names = data.results;
-					const options = names.map(({ name }) => ({ value: name, text: name }));
-					if (currentPage === 1) {
-						setOptions(options);
-					} else {
-						setOptions(prevState => [...prevState, ...options]);
+			fetchData<SearchPeopleResponse>("https://swapi.tech/api/people", params, setIsLoading, noopFn)
+				.then(data => {
+					if (data) {
+						const names = data.results;
+						const options = names.map(({ name }) => ({ value: name, text: name }));
+						if (currentPage === 1) {
+							setOptions(options);
+						} else {
+							setOptions(prevState => [...prevState, ...options]);
+						}
+						setTotalPages(data.total_pages);
 					}
-					setTotalPages(data.total_pages);
-				}
-			});
+				});
+		}
 	}, [debouncedValue, debouncedFilter, currentPage]);
 
 	const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -63,14 +65,14 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		};
 
 		const array = options.map(({ value, text }) => (
-			<Option value={value} key={uuid()}>
+			<Option value={value} key={`${label}${uuid()}`}>
 				{value}
 			</Option>
 		));
 
 		array.push(
 			<Option
-				key={uuid()}
+				key={`${label}${uuid()}`}
 				value={""}
 				renderOption={options =>
 					<LastOption
