@@ -9,11 +9,18 @@ interface InfiniteScrollProps {
 	onLastElement?: () => void;
 }
 
-export const InfiniteScroll: FC<InfiniteScrollProps> = ({ data, RenderComponent, onLastElement }) => {
-	const Element = useMemo(() => RenderComponent ?? ListItem, [RenderComponent]);
+export const InfiniteScroll: FC<InfiniteScrollProps> = ({
+	data,
+	RenderComponent,
+	onLastElement,
+}) => {
+	const Element = useMemo(
+		() => RenderComponent ?? ListItem, [RenderComponent]);
 
 	const renderListItems = useMemo(() => {
-		return data.map(({ key, value }, i) => <Element key={key}>{value}</Element>);
+		return data.map(({ key, value }, i) => (
+			<Element key={key}>{value}</Element>
+		));
 	}, [data, RenderComponent]);
 
 	const onLastElementInView = useCallback(() => {
