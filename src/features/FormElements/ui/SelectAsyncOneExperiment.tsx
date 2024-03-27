@@ -2,12 +2,12 @@ import { Label, Option, Select } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
 import { LastOption } from "@/features/FormElements";
 import { v4 as uuid } from "uuid";
-import debounce from "lodash.debounce";
 import type { ChangeEvent, FC, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import type { SearchPeopleResponse } from "@/entities/MockData/api/searchPeople";
 import { fetchData } from "@/shared/lib/api/fetchData";
 import { noopFn } from "@/shared/types/types";
+import { useDebouncedValue } from "@/shared/lib/hooks/useDebouncedValue";
 
 interface SelectOneAsyncExperimentProps extends SelectProps {
 	label: ReactNode;
@@ -25,8 +25,11 @@ export const SelectOneAsyncExperiment: FC<SelectOneAsyncExperimentProps> = ({ la
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [filter, setFilter] = useState("");
 
+	const debouncedValue = useDebouncedValue(selectValue, 500);
+	const debouncedFilter = useDebouncedValue(filter, 500);
+
 	useEffect(() => {
-		const params = `search=${filter}&page=${currentPage}&limit=10`;
+		const params = `search=${debouncedFilter}&page=${currentPage}&limit=10`;
 
 		fetchData<SearchPeopleResponse>("https://swapi.tech/api/people", params, setIsLoading, noopFn)
 			.then(data => {
@@ -41,7 +44,7 @@ export const SelectOneAsyncExperiment: FC<SelectOneAsyncExperimentProps> = ({ la
 					setTotalPages(data.total_pages);
 				}
 			});
-	}, [selectValue, filter, currentPage]);
+	}, [debouncedValue, debouncedFilter, currentPage]);
 
 	const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelectValue(e.target.value);
@@ -51,9 +54,6 @@ export const SelectOneAsyncExperiment: FC<SelectOneAsyncExperimentProps> = ({ la
 	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setFilter(e.target.value);
 	};
-
-	const debouncedOnChange = debounce(onChange, 1000);
-	const debouncedOnInputChange = debounce(onInputChange, 1000);
 
 	const renderOptions = useMemo(() => {
 		const onLastElementVisible = () => {
@@ -91,8 +91,8 @@ export const SelectOneAsyncExperiment: FC<SelectOneAsyncExperimentProps> = ({ la
 				{...props}
 				value={selectValue}
 				isLoading={isLoading}
-				onChange={debouncedOnChange}
-				onInputChange={debouncedOnInputChange}
+				onChange={onChange}
+				onInputChange={onInputChange}
 				mode="searchSelect"
 			>
 				{renderOptions}
