@@ -44,7 +44,7 @@ export const Modal: FC<ModalProps> = ({
 
 	return (
 		<>
-			<Button onClick={handleButtonClick}>{buttonTitle}</Button>
+			<Button dimension="s" onClick={handleButtonClick}>{buttonTitle}</Button>
 			{opened && (
 				<BaseModal
 					closeOnEscapeKeyDown

@@ -17,11 +17,7 @@ export const FilterAccountTransactions = () => {
 	const [receiver, setReceiver] = useState<string>("Колосов Иван Олегович");
 	const [rangeCountValue, setRangeCountValue] = useState<[number, number]>([1, 21]);
 	const [message, setMessage] = useState<string>("");
-	const [listData, setListData] = useState<Array<ListDataType>>([
-		{ id: uuid(), label: "Москва" },
-		{ id: uuid(), label: "Тверь" },
-		{ id: uuid(), label: "Самара" },
-	]);
+	const [listData, setListData] = useState<Array<ListDataType>>([]);
 
 	useEffect(() => {
 		if (clearFilters) {
