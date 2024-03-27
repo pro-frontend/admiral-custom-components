@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "@/features/Modal";
 import { Range, SelectOne, SelectOneAsync } from "@/features/FormElements";
 import { Separator } from "@/shared/ui";
@@ -7,6 +7,8 @@ import { searchPeopleByName } from "@/entities/MockData";
 import type { ListDataType } from "@/features/FilteredOptions";
 import { FilteredOptions } from "@/features/FilteredOptions";
 import { v4 as uuid } from "uuid";
+import { SelectOneAsyncExperiment } from "@/features/FormElements/ui/SelectAsyncOneExperiment";
+import { SeparatorMode } from "@/shared/ui/Separator";
 
 export const FilterAccountTransactions = () => {
 	const [clearFilters, setClearFilters] = useState<boolean>(false);
@@ -66,7 +68,9 @@ export const FilterAccountTransactions = () => {
 				onOk={onModalOk}
 				okButtonTitle="Далее"
 			>
-				<Separator />
+				<SelectOneAsyncExperiment label="SelectOneAsyncExperiment:" request={() => {
+				}} />
+				<Separator $mode={SeparatorMode.L} />
 				<SelectOneAsync
 					label="Тип таска:"
 					value={taskType}
@@ -74,7 +78,7 @@ export const FilterAccountTransactions = () => {
 					placeholder="Тип таска"
 					request={searchPeopleByName}
 				/>
-				<Separator />
+				<Separator $mode={SeparatorMode.L} />
 				<SelectOne
 					label="Филиал:"
 					value={message}
@@ -84,7 +88,7 @@ export const FilterAccountTransactions = () => {
 					// count={}
 					// onVisible={}
 				/>
-				<Separator />
+				<Separator $mode={SeparatorMode.L} />
 				<Range
 					label="Сумма:"
 					showValues

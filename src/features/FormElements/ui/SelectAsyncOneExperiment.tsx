@@ -1,4 +1,4 @@
-import { Label, Option, Select, useDebounce } from "@admiral-ds/react-ui";
+import { Label, Option, Select } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
 import { LastOption } from "@/features/FormElements";
 import type { ChangeEvent, FC, ReactNode } from "react";
@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash.debounce";
 
-interface SelectOneAsyncProps extends SelectProps {
+interface SelectOneAsyncExperimentProps extends SelectProps {
 	label: ReactNode;
 	// TODO: describe type
 	// FIXME: change type from "any"
@@ -14,7 +14,7 @@ interface SelectOneAsyncProps extends SelectProps {
 	onVisible?: () => void;
 }
 
-export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...props }) => {
+export const SelectOneAsyncExperiment: FC<SelectOneAsyncExperimentProps> = ({ label, request, ...props }) => {
 	const [selectValue, setSelectValue] = useState(props.value ? String(props.value) : "");
 	const [options, setOptions] = useState<Array<{ value: string; text: string }>>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -52,14 +52,8 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 	const debouncedOnInputChange = debounce(onInputChange, 1000);
 
 	const renderOptions = useMemo(() => {
-		// const onLastElementVisible = () => {
-		// 	const totalPages = data["total_pages"];
-		// 	if (currentPage < totalPages) {
-		// 		setCurrentPage(prevState => {
-		// 			return prevState + 1;
-		// 		});
-		// 	}
-		// };
+		const onLastElementVisible = () => {
+		};
 
 		const array = options.map(({ value, text }) => (
 			<Option value={value} key={uuid()}>
@@ -74,7 +68,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				renderOption={options =>
 					<LastOption
 						{...options}
-						// onVisible={onLastElementVisible}
+						onVisible={onLastElementVisible}
 						key={uuid()}
 					/>}
 			/>,

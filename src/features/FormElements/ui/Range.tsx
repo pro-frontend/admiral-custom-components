@@ -3,6 +3,7 @@ import type { RangeProps as BaseRangeProps } from "@admiral-ds/react-ui";
 import styled from "styled-components";
 import type { FC, ReactNode } from "react";
 import { memo, useCallback, useId, useMemo, useState } from "react";
+import debounce from "lodash.debounce";
 
 const RangeValues = styled.div`
 	display: flex;
@@ -37,6 +38,8 @@ export const Range: FC<RangeProps> = memo(({
 		onRangeValueChange && onRangeValueChange(value);
 	}, [onRangeValueChange]);
 
+	const debouncedOnRangeChange = debounce(onRangeChange, 10);
+
 	return <>
 		<Label htmlFor={rangeId}>{label}</Label>
 		{showValues && rangeValuesRender}
@@ -44,7 +47,7 @@ export const Range: FC<RangeProps> = memo(({
 			{...props}
 			id={rangeId}
 			value={rangeValue}
-			onChange={onRangeChange}
+			onChange={debouncedOnRangeChange}
 		/>
 	</>;
 });
