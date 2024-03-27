@@ -5,6 +5,7 @@ export const Container = styled.section`
 	width: 900px;
 	display: flex;
 	flex-direction: column;
+	
 	@media only screen and (max-width: 980px) {
 		width: 100%;
 	}

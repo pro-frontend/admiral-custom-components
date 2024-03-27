@@ -1,13 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import { Label, Option, Select, useDebounce } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
-import { LastOption } from "@/features/FormElements/ui/LastOption";
+import { LastOption } from "@/features/FormElements";
 import type { ChangeEvent, FC, ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 interface SelectOneAsyncProps extends SelectProps {
 	label: ReactNode;
+	// TODO: describe type
+	// FIXME: change type from "any"
 	request: any;
 	onVisible?: () => void;
 }
@@ -18,24 +19,24 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [filter, setFilter] = useState("");
 
-	const debouncedFilter = useDebounce(filter, 500);
+	// const debouncedFilter = useDebounce(filter, 500);
 
-	const { data, isLoading } = useQuery({
-		queryKey: ["products", debouncedFilter],
-		queryFn: () => request(debouncedFilter, String(currentPage)),
-	});
+	// const { data, isLoading } = useQuery({
+	// 	queryKey: ["products", debouncedFilter],
+	// 	queryFn: () => request(debouncedFilter, String(currentPage)),
+	// });
 
-	useEffect(() => {
-		if (data) {
-			const names = data["results"] as Array<{ name: string }>;
-			const options = names.map(({ name }) => ({ value: name, text: name }));
-			if (currentPage === 1) {
-				setOptions(options);
-			} else {
-				setOptions((prevState) => [...prevState, ...options]);
-			}
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	if (data) {
+	// 		const names = data["results"] as Array<{ name: string }>;
+	// 		const options = names.map(({ name }) => ({ value: name, text: name }));
+	// 		if (currentPage === 1) {
+	// 			setOptions(options);
+	// 		} else {
+	// 			setOptions((prevState) => [...prevState, ...options]);
+	// 		}
+	// 	}
+	// }, [data]);
 
 	const onChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setSelectValue(e.target.value);
@@ -47,14 +48,14 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 	};
 
 	const renderOptions = useMemo(() => {
-		const onLastElementVisible = () => {
-			const totalPages = data["total_pages"];
-			if (currentPage < totalPages) {
-				setCurrentPage(prevState => {
-					return prevState + 1;
-				});
-			}
-		};
+		// const onLastElementVisible = () => {
+		// 	const totalPages = data["total_pages"];
+		// 	if (currentPage < totalPages) {
+		// 		setCurrentPage(prevState => {
+		// 			return prevState + 1;
+		// 		});
+		// 	}
+		// };
 
 		const array = options.map(({ value, text }) => (
 			<Option value={value} key={uuid()}>
@@ -69,7 +70,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				renderOption={options =>
 					<LastOption
 						{...options}
-						onVisible={onLastElementVisible}
+						// onVisible={onLastElementVisible}
 						key={uuid()}
 					/>}
 			/>,
@@ -86,7 +87,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 			<Select
 				{...props}
 				value={selectValue}
-				isLoading={isLoading}
+				// isLoading={isLoading}
 				onChange={onChange}
 				onInputChange={onInputChange}
 				mode="searchSelect"

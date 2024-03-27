@@ -1,6 +1,6 @@
 import type { RenderOptionProps } from "@admiral-ds/react-ui";
 import { useEffect, useRef, useState } from "react";
-import { InvisibleItem } from "@/features/FormElements/ui/InvisibleItem";
+import { InvisibleItem } from "@/features/FormElements";
 
 interface LastOptionProps extends RenderOptionProps {
 	onVisible?: () => void;

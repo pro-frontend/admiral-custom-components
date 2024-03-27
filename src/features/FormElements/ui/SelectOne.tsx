@@ -2,7 +2,7 @@ import { Label, Option, Select } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
 import { useMemo, useState, useId } from "react";
 import type { FC, ReactNode } from "react";
-import { LastOption } from "@/features/FormElements/ui/LastOption";
+import { LastOption } from "@/features/FormElements";
 
 interface SelectOneProps extends SelectProps {
 	label: ReactNode;
