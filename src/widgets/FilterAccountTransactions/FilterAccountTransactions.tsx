@@ -7,7 +7,6 @@ import { searchPeopleByName } from "@/entities/MockData";
 import type { ListDataType } from "@/features/FilteredOptions";
 import { FilteredOptions } from "@/features/FilteredOptions";
 import { v4 as uuid } from "uuid";
-import { SelectOneAsyncExperiment } from "@/features/FormElements/ui/SelectAsyncOneExperiment";
 import { SeparatorMode } from "@/shared/ui/Separator";
 
 export const FilterAccountTransactions = () => {
@@ -68,9 +67,8 @@ export const FilterAccountTransactions = () => {
 				onOk={onModalOk}
 				okButtonTitle="Далее"
 			>
-				<SelectOneAsyncExperiment
+				<SelectOneAsync
 					label="SelectOneAsyncExperiment:"
-					request={searchPeopleByName}
 					value={taskType}
 					onChange={handleTaskTypeChange}
 					placeholder="Тип таска"
@@ -78,10 +76,9 @@ export const FilterAccountTransactions = () => {
 				<Separator $mode={SeparatorMode.L} />
 				<SelectOneAsync
 					label="Тип таска:"
-					value={taskType}
+					value={filial}
 					onChange={handleTaskTypeChange}
 					placeholder="Тип таска"
-					request={searchPeopleByName}
 				/>
 				<Separator $mode={SeparatorMode.L} />
 				<SelectOne
