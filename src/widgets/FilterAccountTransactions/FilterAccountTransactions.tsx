@@ -1,5 +1,5 @@
 import type { ChangeEvent } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "@/features/Modal";
 import { Range, SelectOneAsync } from "@/features/FormElements";
 import { Separator } from "@/shared/ui";
@@ -7,31 +7,19 @@ import type { ListDataType } from "@/features/FilteredOptions";
 import { FilteredOptions } from "@/features/FilteredOptions";
 import { v4 as uuid } from "uuid";
 import { SeparatorMode } from "@/shared/ui/Separator";
-import type { RangeNumber } from "@/features/FormElements/ui/Range";
+import type { RangeNumber } from "@/features/FormElements";
+
+const defaultTotalCount: RangeNumber = [0, 20];
 
 export const FilterAccountTransactions = () => {
-	const [clearFilters, setClearFilters] = useState<boolean>(false);
 	const [taskType, setTaskType] = useState<string>("Документооборот");
 	const [filial, setFilial] = useState<string>("Москва");
 	const [documentID, setDocumentID] = useState<string>(uuid());
 	const [initiator, setInitiator] = useState<string>("Иванов Иван Олегович");
 	const [receiver, setReceiver] = useState<string>("Колосов Иван Олегович");
-	const [rangeCountValue, setRangeCountValue] = useState<RangeNumber>([1, 21]);
+	const [totalCountValue, setTotalCountValue] = useState<RangeNumber>(defaultTotalCount);
 	const [message, setMessage] = useState<string>("");
 	const [listData, setListData] = useState<Array<ListDataType>>([]);
-
-	useEffect(() => {
-		if (clearFilters) {
-			setTaskType("");
-			setFilial("");
-			setDocumentID("");
-			setInitiator("");
-			setReceiver("");
-			setMessage("");
-		}
-
-		setClearFilters(false);
-	}, [clearFilters]);
 
 	const handleTaskTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setTaskType(e.target.value);
@@ -49,7 +37,7 @@ export const FilterAccountTransactions = () => {
 		setReceiver(e.target.value);
 	};
 	const handleRangeCountValueChange = (e: unknown, value: [number, number]) => {
-		setRangeCountValue(value);
+		setTotalCountValue(value);
 	};
 	const handleMessageChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setMessage(e.target.value);
@@ -65,11 +53,13 @@ export const FilterAccountTransactions = () => {
 		if (receiver) chipsData.push({ id: uuid(), label: `Участник получатель: ${receiver}` });
 		if (message) chipsData.push({ id: uuid(), label: `Сообщение: ${message}` });
 
-		setRangeCountValue([0, 20]);
+		if (!totalCountValue.every((element, index) => element === defaultTotalCount[index])) {
+			chipsData.push({ id: uuid(), label: `Сумма: от ${totalCountValue[0]} до ${totalCountValue[1]}` });
+		}
+
+		setTotalCountValue(defaultTotalCount);
 
 		setListData(prevState => [...prevState, ...chipsData]);
-
-		setClearFilters(true);
 	};
 
 	return (
@@ -120,9 +110,9 @@ export const FilterAccountTransactions = () => {
 					label="Сумма:"
 					showValues
 					step={0.01}
-					value={rangeCountValue}
+					value={totalCountValue}
 					onChange={handleRangeCountValueChange}
-					onRangeValueChange={setRangeCountValue}
+					onRangeValueChange={setTotalCountValue}
 				/>
 				<Separator $mode={SeparatorMode.L} />
 				<SelectOneAsync

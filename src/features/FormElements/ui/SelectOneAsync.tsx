@@ -2,12 +2,13 @@ import { Label, Option, Select } from "@admiral-ds/react-ui";
 import type { SelectProps } from "@admiral-ds/react-ui";
 import { LastOption } from "@/features/FormElements";
 import { v4 as uuid } from "uuid";
-import type { ChangeEvent, FC, ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
 import type { SearchPeopleResponse } from "@/entities/MockData/api/searchPeople";
 import { fetchData } from "@/shared/lib/api/fetchData";
-import { noopFn } from "@/shared/types/types";
+import { noopFn } from "@/shared/types";
 import { useDebouncedValue } from "@/shared/lib/hooks/useDebouncedValue";
+import { useComponentDidUpdate } from "@/shared/lib/hooks/useComponentDidUpdate";
+import type { ChangeEvent, FC, ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface SelectOneAsyncProps extends SelectProps {
 	label: ReactNode;
@@ -29,6 +30,10 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 	const debouncedFilter = useDebouncedValue(filter, 500);
 
 	useEffect(() => {
+		setCurrentPage(1);
+	}, []);
+
+	useComponentDidUpdate(() => {
 		if (currentPage !== totalPages) {
 			const params = `search=${debouncedFilter}&page=${currentPage}&limit=10`;
 
