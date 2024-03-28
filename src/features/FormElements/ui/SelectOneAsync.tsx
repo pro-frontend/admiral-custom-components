@@ -20,21 +20,26 @@ interface SelectOneAsyncProps extends SelectProps {
 
 export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...props }) => {
 	const [selectValue, setSelectValue] = useState(props.value ? String(props.value) : "");
+	const [filter, setFilter] = useState(props.value ? String(props.value) : "");
 	const [options, setOptions] = useState<Array<{ value: string; text: string }>>([]);
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [totalPages, setTotalPages] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(0);
+	const [totalPages, setTotalPages] = useState<number | "unset">("unset");
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [filter, setFilter] = useState("");
 
 	const debouncedValue = useDebouncedValue(selectValue, 500);
 	const debouncedFilter = useDebouncedValue(filter, 500);
 
 	useEffect(() => {
-		setCurrentPage(1);
+		fetchData<SearchPeopleResponse>("https://swapi.tech/api/people", "page=1", setIsLoading, noopFn)
+			.then(data => {
+				if (data) {
+					setTotalPages(data.total_pages);
+				}
+			});
 	}, []);
 
 	useComponentDidUpdate(() => {
-		if (currentPage !== totalPages) {
+		if (typeof totalPages === "number" && currentPage < totalPages) {
 			const params = `search=${debouncedFilter}&page=${currentPage}&limit=10`;
 
 			fetchData<SearchPeopleResponse>("https://swapi.tech/api/people", params, setIsLoading, noopFn)
@@ -64,7 +69,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 
 	const renderOptions = useMemo(() => {
 		const onLastElementVisible = () => {
-			if (currentPage < totalPages) {
+			if (typeof totalPages === "number" && currentPage < totalPages) {
 				setCurrentPage(currentPage + 1);
 			}
 		};
@@ -89,7 +94,7 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 		);
 
 		return array;
-	}, [options]);
+	}, [options, totalPages]);
 
 	return (
 		<>
@@ -102,7 +107,9 @@ export const SelectOneAsync: FC<SelectOneAsyncProps> = ({ label, request, ...pro
 				onInputChange={onInputChange}
 				mode="searchSelect"
 			>
-				{renderOptions}
+				{
+					renderOptions
+				}
 			</Select>
 		</>
 	);
