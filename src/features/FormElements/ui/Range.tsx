@@ -19,17 +19,20 @@ interface RangeProps extends BaseRangeProps {
 	onRangeValueChange?: (rangeValue: RangeNumber) => void;
 	/** label for range */
 	label: ReactNode;
+	minValue: number;
+	maxValue: number;
 }
 
 export const Range: FC<RangeProps> = memo(({
 	showValues = false,
 	onRangeValueChange,
-	minValue = 0,
-	maxValue = 20,
+	minValue,
+	maxValue,
 	label,
+	value,
 	...props
 }) => {
-	const [rangeValue, setRangeValue] = useState<RangeNumber>([minValue, maxValue]);
+	const [rangeValue, setRangeValue] = useState<RangeNumber>([value[0] ?? minValue, value[1] ?? maxValue]);
 	const rangeId = useId();
 	const rangeValuesRender = useMemo(() => {
 		return <RangeValues><span>{rangeValue[0]}</span> <span>{rangeValue[1]}</span></RangeValues>;
@@ -47,6 +50,8 @@ export const Range: FC<RangeProps> = memo(({
 		{showValues && rangeValuesRender}
 		<BaseRange
 			{...props}
+			minValue={minValue}
+			maxValue={maxValue}
 			id={rangeId}
 			value={rangeValue}
 			onChange={debouncedOnRangeChange}

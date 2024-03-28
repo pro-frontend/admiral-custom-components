@@ -1,14 +1,15 @@
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { Modal } from "@/features/Modal";
+import type { RangeNumber } from "@/features/FormElements";
 import { Range, SelectOneAsync } from "@/features/FormElements";
-import type { ListDataType } from "@/features/FilteredOptions";
+import type { FilteredChipsDataType } from "@/features/FilteredOptions";
 import { FilteredOptions } from "@/features/FilteredOptions";
 import { v4 as uuid } from "uuid";
-import type { RangeNumber } from "@/features/FormElements";
 import { Separator, SeparatorMode } from "@/shared/ui";
+import { FilteredOptionsType } from "@/features/FilteredOptions/FilteredOptions";
 
-const defaultTotalCount: RangeNumber = [0, 20];
+const defaultTotalCount: RangeNumber = [0, 5];
 
 export const FilterAccountTransactions = () => {
 	const [taskType, setTaskType] = useState<string>("Документооборот");
@@ -18,7 +19,7 @@ export const FilterAccountTransactions = () => {
 	const [receiver, setReceiver] = useState<string>("Колосов Иван Олегович");
 	const [totalCountValue, setTotalCountValue] = useState<RangeNumber>(defaultTotalCount);
 	const [message, setMessage] = useState<string>("");
-	const [listData, setListData] = useState<Array<ListDataType>>([]);
+	const [listData, setListData] = useState<Array<FilteredChipsDataType>>([]);
 
 	const handleTaskTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		setTaskType(e.target.value);
@@ -42,28 +43,52 @@ export const FilterAccountTransactions = () => {
 		setMessage(e.target.value);
 	};
 
-	const onModalOk = () => {
-		const chipsData: ListDataType[] = [];
+	const onFilteredChipsClose = (item: FilteredChipsDataType) => {
+		setListData((prev) => prev.filter((d) => d.id !== item.id));
+	};
 
-		if (taskType) chipsData.push({ id: uuid(), label: `Тип таска: ${taskType}` });
-		if (filial) chipsData.push({ id: uuid(), label: `Филиал: ${filial}` });
-		if (documentID) chipsData.push({ id: uuid(), label: `ID документа: ${documentID}` });
-		if (initiator) chipsData.push({ id: uuid(), label: `Участник отправитель: ${initiator}` });
-		if (receiver) chipsData.push({ id: uuid(), label: `Участник получатель: ${receiver}` });
-		if (message) chipsData.push({ id: uuid(), label: `Сообщение: ${message}` });
+	const onModalOk = () => {
+		const chipsData: FilteredChipsDataType[] = [];
+
+		if (taskType) chipsData.push({
+			id: uuid(),
+			type: FilteredOptionsType.taskType,
+			label: `${taskType}`,
+		});
+		if (filial) chipsData.push({ id: uuid(), type: FilteredOptionsType.filial, label: `${filial}` });
+		if (documentID) chipsData.push({
+			id: uuid(),
+			type: FilteredOptionsType.documentID,
+			label: `${documentID}`,
+		});
+		if (initiator) chipsData.push({
+			id: uuid(),
+			type: FilteredOptionsType.initiator,
+			label: `${initiator}`,
+		});
+		if (receiver) chipsData.push({
+			id: uuid(),
+			type: FilteredOptionsType.receiver,
+			label: `${receiver}`,
+		});
+		if (message) chipsData.push({ id: uuid(), type: FilteredOptionsType.message, label: `${message}` });
 
 		if (!totalCountValue.every((element, index) => element === defaultTotalCount[index])) {
-			chipsData.push({ id: uuid(), label: `Сумма: от ${totalCountValue[0]} до ${totalCountValue[1]}` });
+			chipsData.push({
+				id: uuid(),
+				type: FilteredOptionsType.totalCountValue,
+				label: `от ${totalCountValue[0]} до ${totalCountValue[1]}`,
+			});
 		}
 
-		setTotalCountValue(defaultTotalCount);
+		// setTotalCountValue(defaultTotalCount);
 
 		setListData(prevState => [...prevState, ...chipsData]);
 	};
 
 	return (
 		<>
-			<FilteredOptions listData={listData} />
+			<FilteredOptions onFilteredChipsClose={onFilteredChipsClose} listData={listData} />
 			<Modal
 				title="Фильтры модуля расчетных операций"
 				buttonTitle="+"
@@ -109,6 +134,8 @@ export const FilterAccountTransactions = () => {
 					label="Сумма:"
 					showValues
 					step={0.01}
+					minValue={defaultTotalCount[0]}
+					maxValue={defaultTotalCount[1]}
 					value={totalCountValue}
 					onChange={handleRangeCountValueChange}
 					onRangeValueChange={setTotalCountValue}

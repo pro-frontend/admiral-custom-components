@@ -3,36 +3,44 @@ import type { ChipsProps } from "@admiral-ds/react-ui";
 import type { FC } from "react";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import { Voidable } from "@/shared/types";
 
-// TODO: add field "type"
-export type ListDataType = {
+export enum FilteredOptionsType {
+	taskType = "Тип таска",
+	filial = "Филиал",
+	documentID = "ID документа",
+	initiator = "Участник отправитель",
+	receiver = "Участник получатель",
+	totalCountValue = "Сумма",
+	message = "Сообщение",
+}
+
+export type FilteredChipsDataType = {
 	id: string,
-	label: string
+	type: FilteredOptionsType;
+	label: string;
 };
 
 interface FilteredOptionsProps extends ChipsProps {
-	listData: Array<ListDataType>;
+	listData: Array<FilteredChipsDataType>;
+	onFilteredChipsClose: (item: FilteredChipsDataType) => void;
 }
 
 const StyledChips = styled(Chips)`
 	max-width: 100%;
 `;
 
-export const FilteredOptions: FC<FilteredOptionsProps> = ({ listData }) => {
-	const [dataList, setDataList] = useState(listData);
-
-	useEffect(() => {
-		setDataList(listData);
-	}, [listData]);
-
+export const FilteredOptions: FC<FilteredOptionsProps> = ({ listData, onFilteredChipsClose }) => {
 	const dataListRender = useMemo(() => {
-		return dataList.map((item) => (
-			<StyledChips key={item.id}
-			             onClose={() => setDataList((prev) => prev.filter((d) => d.id !== item.id))}>
-				{item.label}
+		return listData.map((item: FilteredChipsDataType) => (
+			<StyledChips
+				key={item.id}
+				onClose={() => onFilteredChipsClose(item)}
+			>
+				{item.type}: {item.label}
 			</StyledChips>
 		));
-	}, [dataList]);
+	}, [listData]);
 
 	return (
 		<>
