@@ -1,2 +1,2 @@
 export { Container, WidgetContainer } from "./Container";
-export { Separator } from "./Separator";
+export { Separator, SeparatorMode } from "./Separator";

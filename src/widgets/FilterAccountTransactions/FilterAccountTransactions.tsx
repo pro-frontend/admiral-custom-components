@@ -2,12 +2,11 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { Modal } from "@/features/Modal";
 import { Range, SelectOneAsync } from "@/features/FormElements";
-import { Separator } from "@/shared/ui";
 import type { ListDataType } from "@/features/FilteredOptions";
 import { FilteredOptions } from "@/features/FilteredOptions";
 import { v4 as uuid } from "uuid";
-import { SeparatorMode } from "@/shared/ui/Separator";
 import type { RangeNumber } from "@/features/FormElements";
+import { Separator, SeparatorMode } from "@/shared/ui";
 
 const defaultTotalCount: RangeNumber = [0, 20];
 
